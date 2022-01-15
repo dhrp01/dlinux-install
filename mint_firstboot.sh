@@ -81,12 +81,12 @@ function set_dual_boot_timezone() {
 
 function install_atom() {
     # Install atom
-    versions = ('atom' 'atom-beta' 'Quit')
+    versions=('atom' 'atom-beta' 'Quit')
     wget -qO - https://packagecloud.io/AtomEditor/atom/gpgkey | sudo apt-key add
     sudo sh -c 'echo "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main" > /etc/apt/sources.list.d/atom.list'
     sudo apt-get update
     PS3=$(echo_prompt '\nChoose The Atom Version You Want To Install: ')
-    select VERSION in "${versions[@]}": do
+    select VERSION in "${versions[@]}"; do
         case "${VERSION}" in
             'atom')
                 sudo apt-get install atom
@@ -115,9 +115,9 @@ function install_sublime() {
 
 function install_text_editor() {
     # Install required test editor
-    text_editors = ('atom' 'sublime' 'No Editor' 'Quit')
+    text_editors=('atom' 'sublime' 'No Editor' 'Quit')
     PS3=$(echo_prompt '\nChoose The Text Editor You Want To Install: ')
-    select EDITOR in "${text_editors[@]}": do
+    select EDITOR in "${text_editors[@]}"; do
         case "${EDITOR}" in
             'atom')
                 install_atom
@@ -138,9 +138,9 @@ function install_text_editor() {
 
 function install_vscode() {
     # Install VSCode
-    install_vscode = ('yes' 'no')
+    install_vscode=('yes' 'no')
     PS3=$(echo_prompt '\nChoose Whether To Install VSCode: ')
-    select INSTALL in "${install_code[@]}": do
+    select INSTALL in "${install_code[@]}"; do
         case "${INSTALL}" in
             'yes')
                 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
@@ -162,9 +162,9 @@ function install_vscode() {
 function install_sleek_bootloader() {
     # Install sleek bootloader
     git clone https://github.com/sandesh236/sleek--themes.git
-    sleek_themes = ('Dark' 'Light' 'Orange' 'Bigsur' 'Quit')
+    sleek_themes=('Dark' 'Light' 'Orange' 'Bigsur' 'Quit')
     PS3=$(echo_prompt '\nChoose The Sleek Theme You Want To Install: ')
-    select THEME in "${sleek_themes[@]}": do
+    select THEME in "${sleek_themes[@]}"; do
         case "${THEME}" in
             'Dark')
                 cd Sleek\ theme-dark
@@ -203,14 +203,13 @@ function install_dark_matter_theme() {
 function install_grub() {
     # Install required grubbootloader
     grub_themes=('Sleek GrubBootLoader' 'Dark Matter Grub Theme' 'No Theme' 'Quit')
-
     PS3=$(echo_prompt '\nChoose The Browser/Browsers You Want To Install: ')
-    select BOOTLOADER in "${grub_themes[@]}": do
+    select BOOTLOADER in "${grub_themes[@]}"; do
         case "${BOOTLOADER}" in
             'Sleek GrubBootLoader')
                 install_sleek_bootloader
                 break;;
-            'Dark Matter Grub Theme'
+            'Dark Matter Grub Theme')
                 install_dark_matter
                 break;;
             'No Theme')
@@ -270,9 +269,9 @@ function install_icon_theme_paper() {
 
 function install_icon_theme() {
     # Install icon theme
-    icon_themes = ('Paper' 'Pop-os' 'la-capitaine' 'Papirus' 'No Theme' 'Quit')
+    icon_themes=('Paper' 'Pop-os' 'la-capitaine' 'Papirus' 'No Theme' 'Quit')
     PS3=$(echo_prompt '\nChoose The Icon Theme You Want To Install: ')
-    select THEME in "${icon_themes[@]}": do
+    select THEME in "${icon_themes[@]}"; do
         case "${THEME}" in
             'Paper')
                 install_icon_theme_paper
@@ -280,10 +279,10 @@ function install_icon_theme() {
             'Pop-os')
                 install_icon_theme_popos
                 break;;
-            'la-capitaine'
+            'la-capitaine')
                 install_icon_theme_la_capitaine
                 break;;
-            'Papirus'
+            'Papirus')
                 install_icon_theme_papirus
                 break;;
             'No Theme')

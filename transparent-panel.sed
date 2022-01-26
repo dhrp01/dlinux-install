@@ -15,14 +15,14 @@
 /"tooltip": "Use a custom icon in the panel",/{
 	p;n;
 	/"value": false/ {
-	s/"value": false/"value": false/1;
+	s/"value": false/"value": true/1;
 	p;d;
 	}
 }
 /"tooltip": "Panel icon",/{
 	p;n;
-	/"value": "emote-love"/ {
-		s/"value": "emote-love"/"value": "start-here-debian"/1;
+	/"value": .*/ {
+		s/"value": .*/"value": "start-here-debian"/1;
 	p;d;
 	}
 }

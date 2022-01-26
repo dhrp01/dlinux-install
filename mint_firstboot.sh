@@ -168,20 +168,16 @@ function install_sleek_bootloader() {
     select THEME in "${sleek_themes[@]}"; do
         case "${THEME}" in
             'Dark')
-                cd Sleek\ theme-dark
-                sudo ./install.sh
+                sudo ./sleek--themes/Sleek\ theme-dark/install.sh
                 break;;
             'Light')
-                cd Sleek\ theme-white
-                sudo ./install.sh
+                sudo ./sleek--themes/Sleek\ theme-white/install.sh
                 break;;
             'Orange')
-                cd Sleektheme-orange
-                sudo ./install.sh
+                sudo ./sleek--themes/Sleek\ theme-orange/install.sh
                 break;;
             'Bigsur')
-                cd Sleek\ theme-bigSur
-                sudo ./install.sh
+                sudo ./sleek--themes/Sleek\ theme-bigSur/install.sh
                 break;;
             'Quit')
                 echo_info 'Quiting...'
@@ -198,6 +194,7 @@ function install_dark_matter_theme() {
     git clone --depth 1 https://github.com/vandalsoul/darkmatter-grub2-theme.git
     cd darkmatter-grub2-theme
     sudo python3 install.py
+    cd ..
 }
 
 
@@ -409,6 +406,12 @@ function install_plank() {
   # Install plank
   sudo apt install plank -y
   echo -e "[Desktop Entry]\nType=Application\nExec=plank\nHidden=false\nNoDisplay=false\nX-GNOME-Autostart-enabled=true\nName=Plank" >> ~/.config/autostart/plank.desktop
+  git clone https://github.com/Macintosh98/MacOS-Mojave-Plank-themes PlankMcTheme
+  mv PlankMcTheme/themes/* ~/.local/share/plank/themes/
+  gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ theme 'MacOS-BigSur-Light'
+  gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ zoom-enabled true
+  gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ zoom-percent 160
+  gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ dock-items "['xed.dockitem', 'firefox.dockitem', 'org.gnome.Terminal.dockitem', 'trash.dockitem', 'desktop.dockitem']"
 }
 
 function mac_setup() {
@@ -416,6 +419,37 @@ function mac_setup() {
   alt_tab
   transparent_panels
   install_mc_os_theme
+  gsettings set org.cinnamon.desktop.wm.preferences theme 'McOS-Cinnamon-Edition'
+}
+
+function login_screen() {
+  # sudo apt install lightdm-gtk-greeter
+  #   
+}
+
+function terminal_setup_zsh() {
+  # Install zsh and setup
+  # get uuid of profiles
+  # gsettings get org.gnome.Terminal.ProfilesList list
+  # get default profile list
+  default_profile_uid=$(gsettings get org.gnome.Terminal.ProfilesList default)
+  default_profile_uid=$(echo default_profile_uid | sed s/"'"//g)
+  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${default_profile_uid}/ use-theme-colors false
+  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${default_profile_uid}/ background-color 'rgb(0,0,0)'
+  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${default_profile_uid}/ foreground-color 'rgb(0,255,0)'
+  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${default_profile_uid}/ use-theme-transparency false
+  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${default_profile_uid}/ use-transparent-background true
+  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${default_profile_uid}/ background-transparency-percent 10
+  wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
+  wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
+  wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
+  wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
+  mv MesloLGS* ~/.local/share/fonts/
+  sudo apt install zsh zsh-syntax-highlighting autojump zsh-autosuggestions -y
+  touch "$HOME/.cache/zshhistory"
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
 }
 
 function main() {

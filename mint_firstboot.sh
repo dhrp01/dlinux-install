@@ -1,6 +1,9 @@
 #!/bin/bash
 # Make sure that this file is executable
 
+source ./zsh_terminal_setup.sh
+source ./text_editor_install.sh
+
 function echo_title() {     echo -ne "\033[1;44;37m${*}\033[0m\n"; }
 function echo_caption() {   echo -ne "\033[0;1;44m${*}\033[0m\n"; }
 function echo_bold() {      echo -ne "\033[0;1;34m${*}\033[0m\n"; }
@@ -17,148 +20,23 @@ function echo_prompt() {    echo -ne "\033[0;36m${*}\033[0m "; }
 
 function install_git() {
     # Install git
+    # Funny thing if your cloning you should already have this :xD, but in case it is on some kind of removable drive and also it will update the system before starting
     sudo apt update
     sudo apt upgrade -y
     sudo apt install git -y
 }
 
 
-function install_google_chrome() {
-    # Install google chrome
-    sudo apt update
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-	sudo apt install ./google-chrome-stable_current_amd64.deb -y
-	rm google-chrome-stable_current_amd64.deb
-}
-
-
-function install_brave() {
-    # Install brave
-    sudo apt install apt-transport-https curl
-    sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-    echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-    sudo apt update
-    sudo apt install brave-browser -y
-}
-
-
-function install_browser() {
-    # Install browser of choice
-    browsers=('Google Chrome' 'Brave' 'All' 'Quit')
-
-    PS3=$(echo_prompt '\nChoose The Browser/Browsers You Want To Install: ')
-    select BROWSER in "${browsers[@]}"; do
-        case "${BROWSER}" in
-            'Google Chrome')
-                install_google_chrome
-                break;;
-            'Brave')
-                install_brave
-                break;;
-            'All')
-                install_google_chrome
-                install_brave
-                break;;
-            'Quit')
-                echo_info 'Quiting...'
-                exit 0;;
-            *) echo_warning "Invalid Option \"${REPLY}\"";;
-        esac
-    done
-}
-
-
 function set_dual_boot_timezone() {
-    # Linux and windows dual time issue occurs because linux assues UTC time for hardware clock and syncs software clock accordingly and windows thinks that the hardware clock is as set as per local time and uses that to display software time
-    # While issue can be fixed in both linux and windows, I fix it in linux as I prefer it.
-    echo "Current time info"
+    # Linux and windows dual time issue occurs because linux assues UTC time for hardware clock and syncs software clock accordingly and windows thinks that the hardware clock is set as per local time and uses that to display software time
+    # While issue can be fixed in both linux and windows, I prefer fixing it in linux.
+    echo_bold "Current time info"
     timedatectl
     timedatectl set-local-rtc 1
-    echo "Changed time info"
+    echo_bold "Changed time info"
     timedatectl
     echo "Restart into Windows and check the time"
 }
-
-
-function install_atom() {
-    # Install atom
-    versions=('atom' 'atom-beta' 'Quit')
-    wget -qO - https://packagecloud.io/AtomEditor/atom/gpgkey | sudo apt-key add
-    sudo sh -c 'echo "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main" > /etc/apt/sources.list.d/atom.list'
-    sudo apt-get update
-    PS3=$(echo_prompt '\nChoose The Atom Version You Want To Install: ')
-    select VERSION in "${versions[@]}"; do
-        case "${VERSION}" in
-            'atom')
-                sudo apt-get install atom
-                break;;
-            'atom-beta')
-                sudo pat-get install atom-beta
-                break;;
-            'Quit')
-                echo_info 'Quiting...'
-                exit 0;;
-            *) echo_warning "Invalid Option \"${REPLY}\"";;
-        esac
-    done
-}
-
-
-function install_sublime() {
-    # Install sublime stable
-    wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
-    sudo apt-get install apt-transport-https
-    echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
-    sudo apt-get update
-    sudo apt-get install sublime text
-}
-
-
-function install_text_editor() {
-    # Install required test editor
-    text_editors=('atom' 'sublime' 'No Editor' 'Quit')
-    PS3=$(echo_prompt '\nChoose The Text Editor You Want To Install: ')
-    select EDITOR in "${text_editors[@]}"; do
-        case "${EDITOR}" in
-            'atom')
-                install_atom
-                break;;
-            'sublime')
-                install_sublime
-                break;;
-            'No Editor')
-                break;;
-            'Quit')
-                echo_info 'Quiting...'
-                exit 0;;
-            *) echo_warning "Invalid Option \"${REPLY}\"";;
-        esac
-    done
-}
-
-
-function install_vscode() {
-    # Install VSCode
-    install_vscode=('yes' 'no')
-    PS3=$(echo_prompt '\nChoose Whether To Install VSCode: ')
-    select INSTALL in "${install_code[@]}"; do
-        case "${INSTALL}" in
-            'yes')
-                wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-                sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
-                sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
-                rm -f packages.microsoft.gpg
-                sudo apt install apt-transport-https
-                sudo apt update
-                sudo apt install code
-                break;;
-            'no')
-                break;;
-            *) echo_warning "Invalid Option \"${REPLY}\"";;
-        esac
-    done
-}
-
 
 function install_sleek_bootloader() {
     # Install sleek bootloader
@@ -422,34 +300,11 @@ function mac_setup() {
   gsettings set org.cinnamon.desktop.wm.preferences theme 'McOS-Cinnamon-Edition'
 }
 
+
+
 function login_screen() {
   # sudo apt install lightdm-gtk-greeter
   #   
-}
-
-function terminal_setup_zsh() {
-  # Install zsh and setup
-  # get uuid of profiles
-  # gsettings get org.gnome.Terminal.ProfilesList list
-  # get default profile list
-  default_profile_uid=$(gsettings get org.gnome.Terminal.ProfilesList default)
-  default_profile_uid=$(echo default_profile_uid | sed s/"'"//g)
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${default_profile_uid}/ use-theme-colors false
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${default_profile_uid}/ background-color 'rgb(0,0,0)'
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${default_profile_uid}/ foreground-color 'rgb(0,255,0)'
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${default_profile_uid}/ use-theme-transparency false
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${default_profile_uid}/ use-transparent-background true
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${default_profile_uid}/ background-transparency-percent 10
-  wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
-  wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
-  wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
-  wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
-  mv MesloLGS* ~/.local/share/fonts/
-  sudo apt install zsh zsh-syntax-highlighting autojump zsh-autosuggestions -y
-  touch "$HOME/.cache/zshhistory"
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
 }
 
 function main() {
@@ -460,6 +315,7 @@ function main() {
     install_vscode
     install_icon_theme
     enable_numlock_on_bootup
+    terminal_setup_zsh
 
     set_dual_boot_timezone
 }

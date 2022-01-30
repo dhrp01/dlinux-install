@@ -3,6 +3,10 @@
 
 source ./zsh_terminal_setup.sh
 source ./text_editor_install.sh
+source ./browser_install.sh
+source ./bootloader_theme_install.sh
+source ./icon_pack_install.sh
+source ./theme_install.sh
 
 function echo_title() {     echo -ne "\033[1;44;37m${*}\033[0m\n"; }
 function echo_caption() {   echo -ne "\033[0;1;44m${*}\033[0m\n"; }
@@ -38,210 +42,32 @@ function set_dual_boot_timezone() {
     echo "Restart into Windows and check the time"
 }
 
-function install_sleek_bootloader() {
-    # Install sleek bootloader
-    git clone https://github.com/sandesh236/sleek--themes.git
-    sleek_themes=('Dark' 'Light' 'Orange' 'Bigsur' 'Quit')
-    PS3=$(echo_prompt '\nChoose The Sleek Theme You Want To Install: ')
-    select THEME in "${sleek_themes[@]}"; do
-        case "${THEME}" in
-            'Dark')
-                sudo ./sleek--themes/Sleek\ theme-dark/install.sh
-                break;;
-            'Light')
-                sudo ./sleek--themes/Sleek\ theme-white/install.sh
-                break;;
-            'Orange')
-                sudo ./sleek--themes/Sleek\ theme-orange/install.sh
-                break;;
-            'Bigsur')
-                sudo ./sleek--themes/Sleek\ theme-bigSur/install.sh
-                break;;
-            'Quit')
-                echo_info 'Quiting...'
-                exit 0;;
-            *) echo_warning "Invalid Option \"${REPLY}\"";;
-        esac
-    done
-    rm -rf sleek--themes
-}
-
-
-function install_dark_matter_theme() {
-    # Install dark matter theme
-    git clone --depth 1 https://github.com/vandalsoul/darkmatter-grub2-theme.git
-    cd darkmatter-grub2-theme
-    sudo python3 install.py
-    cd ..
-}
-
-
-function install_grub() {
-    # Install required grubbootloader
-    grub_themes=('Sleek GrubBootLoader' 'Dark Matter Grub Theme' 'No Theme' 'Quit')
-    PS3=$(echo_prompt '\nChoose The Browser/Browsers You Want To Install: ')
-    select BOOTLOADER in "${grub_themes[@]}"; do
-        case "${BOOTLOADER}" in
-            'Sleek GrubBootLoader')
-                install_sleek_bootloader
-                break;;
-            'Dark Matter Grub Theme')
-                install_dark_matter
-                break;;
-            'No Theme')
-                break;;
-            'Quit')
-                echo_info 'Quiting...'
-                exit 0;;
-            *) echo_warning "Invalid Option \"${REPLY}\"";;
-        esac
-    done
-}
-
-
-function install_icon_theme_papirus() {
-    # Install Papirus
-    sudo sh -c "echo 'deb http://ppa.launchpad.net/papirus/papirus/ubuntu focal main' > /etc/apt/sources.list.d/papirus-ppa.list"
-    sudo apt-get install dirmngr
-    sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com E58A9D36647CAE7F
-    sudo apt-get update
-    sudo apt-get install papirus-icon-theme
-    gsettings set org.cinnamon.desktop.interface icon-theme "papirus"
-}
-
-
-function install_icon_theme_la_capitaine() {
-    # Install la capitaine
-    git clone https://github.com/keeferrourke/la-capitaine-icon-theme.git la-capitaine
-    cd la-capitaine
-    ./configure
-    cd ..
-    rm -rf la-capitaine
-    gsettings set org.cinnamon.desktop.interface icon-theme "la-capitaine"
-}
-
-
-function install_icon_theme_popos() {
-    # Install popos
-    git clone https://github.com/pop-os/icon-theme pop-icon-theme
-    cd pop-icon-theme
-    sudo install meson
-    meson build
-    sudo ninja -C "build" install
-    sudo apt autoremove meson
-    cd ..
-    rm -rf pop-icon-theme
-    gsettings set org.cinnamon.desktop.interface icon-theme "Pop"
-}
-
-
-function install_icon_theme_paper() {
-    # Install paper
-    sudo dpkg -i paper*.deb
-    sudo apt install -f
-    gsettings set org.cinnamon.desktop.interface icon-theme "Paper"
-}
-
-
-function install_icon_theme() {
-    # Install icon theme
-    icon_themes=('Paper' 'Pop-os' 'la-capitaine' 'Papirus' 'No Theme' 'Quit')
-    PS3=$(echo_prompt '\nChoose The Icon Theme You Want To Install: ')
-    select THEME in "${icon_themes[@]}"; do
-        case "${THEME}" in
-            'Paper')
-                install_icon_theme_paper
-                break;;
-            'Pop-os')
-                install_icon_theme_popos
-                break;;
-            'la-capitaine')
-                install_icon_theme_la_capitaine
-                break;;
-            'Papirus')
-                install_icon_theme_papirus
-                break;;
-            'No Theme')
-                break;;
-            'Quit')
-                echo_info 'Quiting...'
-                exit 0;;
-            *) echo_warning "Invalid Option \"${REPLY}\"";;
-        esac
-    done
-}
-
 
 function enable_numlock_on_bootup() {
+    # Enable NumLock on startup
     sudo apt-get install numlockx
     echo -e "if [ -x /usr/bin/numlockx ]; then\n\t/usr/bin/numlockx on\nfi" >> /etc/mdm/Init/Default
 }
 
-function install_nordic_theme() {
-  # Install Nordic theme
-  # https://github.com/EliverLara/Nordic
-  cd ~ && git clone https://github.com/EliverLara/Nordic
-  mv Nordic ~/.themes
-  gsettings set org.cinnamon.desktop.interface gtk-theme 'Nordic'
-}
-
-function install_mc_os_theme() {
-  # Install mc os theme
-  # https://github.com/paullinuxthemer/Mc-Os-themes
-  # https://github.com/paullinuxthemer/McOs-Mint-Cinnamon-Edition
-  cd ~ && git clone https://github.com/paullinuxthemer/Mc-OS-themes McOs
-  git clone https://github.com/paullinuxthemer/McOs-Mint-Cinnamon-Edition McOsCinnamon
-  mv -r McOS/*Mint* ~/.themes/
-  mv -r McOsCinnamon/*Cinnamon* ~/.themes/
-  gsettings set org.cinnamon.desktop.interface gtk-theme 'McOS-CTLina-Mint-Dark'
-  rm -rf McOS McOsCinnamon
-}
-
-function install_paper_theme() {
-  # Install paper theme
-  # https:/snwh.org/paper
-  git clone https://github.com/snwh/paper-gtk-theme PaperTheme
-  cd PaperTheme && ./install-gtk-theme.sh
-}
-
-function install_pop_os_theme() {
-  # Install PopOs theme
-  sudo apt install sassc meson libglib2.0-dev -y
-  sudo apt install inkscape optipng -y
-  sudo apt remove pop-gtk-theme -y
-  sudo rm -rf /usr/share/themes/Pop*
-  rm -rf ~/.local/share/themes/Pop*
-  rm -rf ~/.themes/Pop*
-  git clone https://github.com/pop-os/gtk-theme.git
-  cd gtk-theme
-  meson build && cd build
-  ninja
-  ninja install
-  gsettings set org.cinnamon.desktop.interface gtk-theme 'Pop-Dark'
-}
-
-function install_ant_theme() {
-  # Install ant theme
-  # https://github.com/EliverLara/Ant
-  cd ~ && git clone https://github.com/EliverLara/Ant
-  mv Ant ~/.themes/
-  gsettings set org.cinnamon.desktop.interface gtk-theme 'Ant'
-}
 
 function buttons() {
-  # Change the close,minimize,maximize button layout
+  # Change the close,minimize,maximize button layout and pick the needed buttons theme
   gsettings set org.cinnamon.desktop.wm.preferences button-layout 'close,maximize,minimize:'
+  gsettings set org.cinnamon.desktop.wm.preferences theme 'McOS-Cinnamon-Edition'
 }
+
 
 function alt_tab() {
   # Change alt_tab style
   gsettings set org.cinnamon alttab-switcher-style 'coverflow'
 }
 
+
 function show_all_windows() {
   # Show all Windows
   gsettings set org.cinnamon hotcorner-layout "['scale:true:0', 'scale:false:0', 'scale:false:0', 'desktop:false:0']"
 }
+
 
 function transparent_panels() {
   # Add transparent transparent panels
@@ -251,14 +77,16 @@ function transparent_panels() {
   gsettings set org.cinnamon enabled-extensions "['transparent-panels@germanfr']"
   sed -i 's/"value": "panel-.*/"value": "panel-semi-transparent"/g' ~/.cinnamon/configs/transparent-panels@germanfr/transparent-panels@germanfr.json
   sed -i -n -f transparent-panel.sed ~/.cinnamon/configs/transparent-panels@germanfr/transparent-panels@germanfr.json
+  cd ..
 }
+
 
 function panel() {
   # move panel to the top
   gsettings set org.cinnamon panels-enabled "['1:0:top']"
   gsettings set org.cinnamon panels-autohide "['1:false']"
   gsettings set org.cinnamon panel-edit-mode true
-  gsettings set org.cinnamon enabled-applets "['panel1:right:0:systray@cinnamon.org:3', 'panel1:right:1:xapp-status@cinnamon.org:4', 'panel1:right:2:notifications@cinnamon.org:5', 'panel1:right:3:printers@cinnamon.org:6', 'panel1:right:4:removable-drives@cinnamon.org:7', 'panel1:right:5:keyboard@cinnamon.org:8', 'panel1:right:6:favorites@cinnamon.org:9', 'panel1:right:7:network@cinnamon.org:10', 'panel1:right:8:sound@cinnamon.org:11', 'panel1:right:9:power@cinnamon.org:12', 'panel1:right:10:calendar@cinnamon.org:13']"
+  #gsettings set org.cinnamon enabled-applets "['panel1:right:0:systray@cinnamon.org:3', 'panel1:right:1:xapp-status@cinnamon.org:4', 'panel1:right:2:notifications@cinnamon.org:5', 'panel1:right:3:printers@cinnamon.org:6', 'panel1:right:4:removable-drives@cinnamon.org:7', 'panel1:right:5:keyboard@cinnamon.org:8', 'panel1:right:6:favorites@cinnamon.org:9', 'panel1:right:7:network@cinnamon.org:10', 'panel1:right:8:sound@cinnamon.org:11', 'panel1:right:9:power@cinnamon.org:12', 'panel1:right:10:calendar@cinnamon.org:13']"
   gsettings set org.cinnamon panel-edit-mode false
   install_cinnamenu
   install_weather
@@ -276,7 +104,7 @@ function install_weather() {
 function install_cinnamenu() {
   # install Cinnamenu
   wget https://cinnamon-spices.linuxmint.com/files/applets/Cinnamenu@json.zip
-  sudo apt-get install unzip
+  sudo apt-get install unzip -y
   unzip Cinnamenu@json.zip -d ~/.local/share/cinnamon/applets
 }
 
@@ -292,19 +120,16 @@ function install_plank() {
   gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ dock-items "['xed.dockitem', 'firefox.dockitem', 'org.gnome.Terminal.dockitem', 'trash.dockitem', 'desktop.dockitem']"
 }
 
-function mac_setup() {
-  buttons
-  alt_tab
-  transparent_panels
-  install_mc_os_theme
-  gsettings set org.cinnamon.desktop.wm.preferences theme 'McOS-Cinnamon-Edition'
+function mc_os_setup() {
+    # Something similar to Mc-Os can be done, will be adding it shortly.
+    # Will probably create a separate bash script for this specific purpose
 }
 
 
 
 function login_screen() {
   # sudo apt install lightdm-gtk-greeter
-  #   
+  # Sort of pending in LinuxMint
 }
 
 function main() {
@@ -312,12 +137,17 @@ function main() {
     install_browser
     install_grub
     install_text_editor
-    install_vscode
     install_icon_theme
+    install_theme
     enable_numlock_on_bootup
-    terminal_setup_zsh
-
+    buttons
+    alt_tab
+    show_all_windows
+    transparent_panels
+    panel
+    install_plank
     set_dual_boot_timezone
+    terminal_setup_zsh
 }
 
 main

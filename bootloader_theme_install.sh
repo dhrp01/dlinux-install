@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 # Install Grub bootloader themes -> 1. Sleek Bootloader   a. Dark   b. Light   c. Orange   d. Bigsur        2. Dark Matter
 
 function echo_title() {     echo -ne "\033[1;44;37m${*}\033[0m\n"; }
@@ -33,11 +33,12 @@ function install_sleek_bootloader() {
         sudo ./Sleek\ theme-bigSur/install.sh
     else
         sudo ./Sleek\ theme-dark/install.sh
+    fi
     cd ..
 }
 
 
-function install_dark_matter_theme() {
+function install_darkmatter_bootloader() {
     # Install dark matter theme
     git clone --depth 1 https://github.com/vandalsoul/darkmatter-grub2-theme.git
     cd darkmatter-grub2-theme
@@ -65,7 +66,7 @@ function install_grub() {
                 install_sleek_bootloader bigsur
                 break;;
             'Dark Matter Grub Theme')
-                install_dark_matter
+                install_darkmatter_bootloader
                 break;;
             'No Theme')
                 break;;

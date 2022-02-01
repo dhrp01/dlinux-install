@@ -27,10 +27,10 @@ function install_mc_os_theme() {
   # Install mc os theme
   # https://github.com/paullinuxthemer/Mc-Os-themes
   # https://github.com/paullinuxthemer/McOs-Mint-Cinnamon-Edition
-  && git clone https://github.com/paullinuxthemer/Mc-OS-themes McOs
+  git clone https://github.com/paullinuxthemer/Mc-OS-themes McOs
   git clone https://github.com/paullinuxthemer/McOs-Mint-Cinnamon-Edition McOsCinnamon
-  mv -r McOS/*Mint* ~/.themes/
-  mv -r McOsCinnamon/*Cinnamon* ~/.themes/
+  mv McOS/ ~/.themes/
+  mv McOsCinnamon/* ~/.themes/
 }
 
 function install_paper_theme() {
@@ -52,7 +52,7 @@ function install_pop_os_theme() {
   git clone https://github.com/pop-os/gtk-theme.git
   cd gtk-theme
   meson build && cd build
-  ninja && ninja install
+  sudo ninja && sudo ninja install
   cd ../..
 }
 
@@ -78,16 +78,16 @@ function install_theme() {
                 gsettings set org.cinnamon.desktop.interface gtk-theme "Paper"
                 break;;
             'PopOs')
-                gsettings set org.cinnamon.desktop.interface gtk-theme 'Pop-Dark'
+                gsettings set org.cinnamon.desktop.interface gtk-theme 'Pop'
                 break;;
             'Mc-Os')
                 gsettings set org.cinnamon.desktop.interface gtk-theme 'McOS-CTLina-Mint-Dark'
                 break;;
             'Nordic')
-                  gsettings set org.cinnamon.desktop.interface gtk-theme 'Nordic'
+                gsettings set org.cinnamon.desktop.interface gtk-theme 'Nordic'
                 break;;
             'Ant')
-                  gsettings set org.cinnamon.desktop.interface gtk-theme 'Ant'
+                gsettings set org.cinnamon.desktop.interface gtk-theme 'Ant'
                 break;;
             'No Theme')
                 break;;

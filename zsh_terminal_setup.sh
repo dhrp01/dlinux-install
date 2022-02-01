@@ -22,7 +22,7 @@ function terminal_setup_zsh() {
   # Get default profile UUID
   default_profile_uid=$(gsettings get org.gnome.Terminal.ProfilesList default)
   # Remove quote ("'") from UUID
-  default_profile_uid=$(echo default_profile_uid | sed s/"'"//g)
+  default_profile_uid=$(echo $default_profile_uid | sed s/"'"//g)
   # Disable system theme and change background colour to black and foreground to green (Green on black scheme)
   gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${default_profile_uid}/ use-theme-colors false
   gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${default_profile_uid}/ background-color 'rgb(0,0,0)'
@@ -36,7 +36,10 @@ function terminal_setup_zsh() {
   wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
   wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
   wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
+  mkdir ~/.local/share/fonts
   mv MesloLGS* ~/.local/share/fonts/
+  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${default_profile_uid}/ use-system-font false
+  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${default_profile_uid}/ font 'MesloLGS NF 12'
   # Install zsh dependency and power10k
   sudo apt install zsh zsh-syntax-highlighting autojump zsh-autosuggestions -y
   touch "$HOME/.cache/zshhistory"
@@ -47,5 +50,7 @@ function terminal_setup_zsh() {
   # sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   # git clone https://github.com/ChrisTitusTech/zsh
   git clone https://github.com/ChrisTitusTech/zsh
-  #/bin/bash | chsh $USER
+  echo "Password:"
+  read pass_word
+  echo /usr/bin/zsh | echo $pass_word | chsh $USER
 }

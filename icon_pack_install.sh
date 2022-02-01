@@ -27,10 +27,11 @@ function install_icon_theme_papirus() {
 
 function install_icon_theme_la_capitaine() {
     # Install La Capitaine
-    git clone https://github.com/keeferrourke/la-capitaine-icon-theme.git la-capitaine
-    cd la-capitaine
+    git clone https://github.com/keeferrourke/la-capitaine-icon-theme.git ~/.icons/la-capitaine
+    cd ~/.icons/la-capitaine/
+    chmod +x configure
     ./configure
-    cd ..
+    cd -
 }
 
 
@@ -38,17 +39,18 @@ function install_icon_theme_popos() {
     # Install PopOs Icons
     git clone https://github.com/pop-os/icon-theme pop-icon-theme
     cd pop-icon-theme
-    sudo install meson -y
+    sudo apt install meson -y
     meson build
-    sudo ninja -C "build" install -y
+    sudo ninja -C "build" install
     cd ..
 }
 
 
 function install_icon_theme_paper() {
     # Install Paper Icons
-    sudo dpkg -i paper*.deb
-    sudo apt install -f
+    sudo add-apt-repository ppa:snwh/ppa
+    sudo apt update
+    sudo apt-get install paper-icon-theme
 }
 
 
@@ -72,7 +74,7 @@ function install_icon_theme() {
                 gsettings set org.cinnamon.desktop.interface icon-theme "la-capitaine"
                 break;;
             'Papirus')
-                gsettings set org.cinnamon.desktop.interface icon-theme "papirus"
+                gsettings set org.cinnamon.desktop.interface icon-theme "Papirus"
                 break;;
             'No Theme')
                 break;;

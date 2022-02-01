@@ -54,6 +54,7 @@ function buttons() {
   # Change the close,minimize,maximize button layout and pick the needed buttons theme
   gsettings set org.cinnamon.desktop.wm.preferences button-layout 'close,maximize,minimize:'
   gsettings set org.cinnamon.desktop.wm.preferences theme 'McOS-Cinnamon-Edition'
+  gsettings set org.cinnamon.desktop.interface gtk-theme Paper
 }
 
 
@@ -113,24 +114,25 @@ function install_plank() {
   sudo apt install plank -y
   echo -e "[Desktop Entry]\nType=Application\nExec=plank\nHidden=false\nNoDisplay=false\nX-GNOME-Autostart-enabled=true\nName=Plank" >> ~/.config/autostart/plank.desktop
   git clone https://github.com/Macintosh98/MacOS-Mojave-Plank-themes PlankMcTheme
-  mv PlankMcTheme/themes/* ~/.local/share/plank/themes/
+  mkdir -p ~/.local/share/plank/themes
+  sudo mv PlankMcTheme/themes/* ~/.local/share/plank/themes/
   gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ theme 'MacOS-BigSur-Light'
   gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ zoom-enabled true
   gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ zoom-percent 160
   gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ dock-items "['xed.dockitem', 'firefox.dockitem', 'org.gnome.Terminal.dockitem', 'trash.dockitem', 'desktop.dockitem']"
 }
 
-function mc_os_setup() {
+#function mc_os_setup() {
     # Something similar to Mc-Os can be done, will be adding it shortly.
     # Will probably create a separate bash script for this specific purpose
-}
+#}
 
 
 
-function login_screen() {
+#function login_screen() {
   # sudo apt install lightdm-gtk-greeter
   # Sort of pending in LinuxMint
-}
+#}
 
 function main() {
     install_git

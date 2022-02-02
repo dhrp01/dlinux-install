@@ -59,3 +59,4 @@ function install_browser() {
     done
 }
 
+install_browser

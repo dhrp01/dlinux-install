@@ -53,8 +53,10 @@ function enable_numlock_on_bootup() {
 function buttons() {
   # Change the close,minimize,maximize button layout and pick the needed buttons theme
   gsettings set org.cinnamon.desktop.wm.preferences button-layout 'close,maximize,minimize:'
-  gsettings set org.cinnamon.desktop.wm.preferences theme 'McOS-Cinnamon-Edition'
+  gsettings set org.cinnamon.desktop.wm.preferences theme 'McOS-CTLina-Mint-Dark'
   gsettings set org.cinnamon.desktop.interface gtk-theme Paper
+  gsettings set org.cinnamon.theme name 'Nordic'
+  gsettings set org.cinnamon.desktop.interface cursor-theme 'Pop'
 }
 
 
@@ -135,12 +137,6 @@ function install_plank() {
 #}
 
 function main() {
-    install_git
-    install_browser
-    install_grub
-    install_text_editor
-    install_icon_theme
-    install_theme
     enable_numlock_on_bootup
     buttons
     alt_tab
@@ -149,7 +145,7 @@ function main() {
     panel
     install_plank
     set_dual_boot_timezone
-    terminal_setup_zsh
+    reboot
 }
 
 main

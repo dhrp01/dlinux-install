@@ -77,3 +77,5 @@ function install_grub() {
         esac
     done
 }
+
+install_grub

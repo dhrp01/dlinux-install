@@ -50,7 +50,7 @@ function terminal_setup_zsh() {
   # sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   # git clone https://github.com/ChrisTitusTech/zsh
   git clone https://github.com/ChrisTitusTech/zsh
-  echo "Password:"
-  read pass_word
-  echo /usr/bin/zsh | echo $pass_word | chsh $USER
+  Chsh $User
 }
+
+terminal_setup_zsh

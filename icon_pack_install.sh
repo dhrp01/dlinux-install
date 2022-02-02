@@ -85,3 +85,5 @@ function install_icon_theme() {
         esac
     done
 }
+
+install_icon_theme

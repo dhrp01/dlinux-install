@@ -29,7 +29,7 @@ function install_mc_os_theme() {
   # https://github.com/paullinuxthemer/McOs-Mint-Cinnamon-Edition
   git clone https://github.com/paullinuxthemer/Mc-OS-themes McOs
   git clone https://github.com/paullinuxthemer/McOs-Mint-Cinnamon-Edition McOsCinnamon
-  mv McOS/ ~/.themes/
+  mv McOs/* ~/.themes/
   mv McOsCinnamon/* ~/.themes/
 }
 
@@ -98,3 +98,5 @@ function install_theme() {
         esac
     done
 }
+
+install_theme

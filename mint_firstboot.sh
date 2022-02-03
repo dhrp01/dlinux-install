@@ -145,6 +145,7 @@ function main() {
     panel
     install_plank
     set_dual_boot_timezone
+    sudo apt install vim -y
     reboot
 }
 

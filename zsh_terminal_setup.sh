@@ -45,11 +45,10 @@ function terminal_setup_zsh() {
   touch "$HOME/.cache/zshhistory"
   # Power10k: https://github.com/romkatv/powerlevel10k
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
-  echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
   # Uncomment to install ohmyzsh
   # sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   # git clone https://github.com/ChrisTitusTech/zsh
-  git clone https://github.com/ChrisTitusTech/zsh
+  cp .zshrc ~/
   chsh $User
 }
 

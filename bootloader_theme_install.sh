@@ -21,19 +21,21 @@ function install_sleek_bootloader() {
     cd sleek--themes
     if [ $1=='Dark' ];
     then
-        sudo ./Sleek\ theme-dark/install.sh
+        cd Sleek\ theme-dark
     elif [ $1=='Light' ];
     then
-        sudo ./Sleek\ theme-white/install.sh
+        cd Sleek\ theme-white
     elif [ $1=='Orange' ];
     then
-        sudo ./Sleek\ theme-orange/install.sh
+        cd Sleek\ theme-orange
     elif [ $1=='Bigsur' ];
     then
-        sudo ./Sleek\ theme-bigSur/install.sh
+        cd Sleek\ theme-bigSur
     else
-        sudo ./Sleek\ theme-dark/install.sh
+        cd Sleek\ theme-dark
     fi
+    sudo ./install.sh
+    cd ..
     cd ..
 }
 

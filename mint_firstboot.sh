@@ -93,7 +93,7 @@ function panel() {
   gsettings set org.cinnamon panel-edit-mode false
   install_cinnamenu
   install_weather
-  gsettings set org.cinnamon enabled-applets "['panel1:right:4:systray@cinnamon.org:3', 'panel1:right:5:xapp-status@cinnamon.org:4', 'panel1:right:6:notifications@cinnamon.org:5', 'panel1:right:7:printers@cinnamon.org:6', 'panel1:right:8:removable-drives@cinnamon.org:7', 'panel1:right:9:keyboard@cinnamon.org:8', 'panel1:right:10:favorites@cinnamon.org:9', 'panel1:right:11:network@cinnamon.org:10', 'panel1:right:12:sound@cinnamon.org:11', 'panel1:right:13:power@cinnamon.org:12', 'panel1:right:14:calendar@cinnamon.org:', 'panel1:left:0:Cinnamenu@json:', 'panel1:right:3:weather@mockturtl:', 'panel1:right:2:scale@cinnamon.org:', 'panel1:right:1:expo@cinnamon.org:', 'panel1:right:15:user@cinnamon.org:']"
+  gsettings set org.cinnamon enabled-applets "['panel1:right:4:systray@cinnamon.org:3', 'panel1:right:5:xapp-status@cinnamon.org:4', 'panel1:right:6:notifications@cinnamon.org:5', 'panel1:right:7:printers@cinnamon.org:6', 'panel1:right:8:removable-drives@cinnamon.org:7', 'panel1:right:9:keyboard@cinnamon.org:8', 'panel1:right:10:favorites@cinnamon.org:9', 'panel1:right:11:network@cinnamon.org:10', 'panel1:right:12:sound@cinnamon.org:11', 'panel1:right:13:power@cinnamon.org:12', 'panel1:right:14:calendar@cinnamon.org:13', 'panel1:left:0:Cinnamenu@json:14', 'panel1:right:3:weather@mockturtl:15', 'panel1:right:2:scale@cinnamon.org:16', 'panel1:right:1:expo@cinnamon.org:17', 'panel1:right:15:user@cinnamon.org:18']"
   sed -i -n -f transparent-panel.sed ~/.cinnamon/configs/Cinnamenu@json/*.json
   sed -i -n -f transparent-panel.sed /home/dhrumeen/.cinnamon/configs/calendar@cinnamon.org/13.json
 }

@@ -204,7 +204,7 @@ augroup END
 autocmd Filetype html setlocal tabstop=2 shiftwidth=2 expandtab
 
 " Flag unnecessary whitespace
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+au BufRead, BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 " ensures that the auto-complete window goes away when you’re done with it
 let g:ycm_autoclose_preview_window_after_completion=1

@@ -4,12 +4,18 @@ Currently the settings are for Linux-Mint 20.2
 
 ## Output:
 ### Before Running Script:
-![Before Running Script](https://github.com/dhrp01/dlinux-install/tree/main/images/before_script.png)
+![Before Running Script](./images/before_script.png)
 
 ### After Running Script:
-![After Running Script](https://github.com/dhrp01/dlinux-install/tree/main/images/after_script.png)
+![After Running Script](./images/after_script.png)
 
-## Running:
+### Vim Setup
+![Vim Setup](./images/vim_setup.png)
+
+### ZSH Setup
+![ZSH Setup](./images/zsh_setup.png)
+
+## Installing:
 Run command `./mint_firstboot.sh` and follow the prompt.
 
 ## Future:

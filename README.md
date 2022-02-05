@@ -4,10 +4,10 @@ Currently the settings are for Linux-Mint 20.2
 
 ## Output:
 ### Before Running Script:
-![Before Running Script](https://github.com/dhrp01/dlinux-install/tree/main/images/before_script.png)
+![Before Running Script](https://github.com/dhrp01/dlinux-install/tree/main/images/before_script.png?raw=True)
 
 ### After Running Script:
-![After Running Script](https://github.com/dhrp01/dlinux-install/tree/main/images/after_script.png)
+![After Running Script](https://github.com/dhrp01/dlinux-install/tree/main/images/after_script.png?raw=True)
 
 ## Running:
 Run command `./mint_firstboot.sh` and follow the prompt.

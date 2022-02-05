@@ -1,5 +1,19 @@
 #!/bin/bash
-# Make sure that this file is executable
+
+echo -ne "
+-------------------------------------------------------------------------------------------------------------
+██████╗ ██╗     ██╗███╗   ██╗██╗   ██╗██╗  ██╗      ██╗███╗   ██╗███████╗████████╗ █████╗ ██╗     ██╗     
+██╔══██╗██║     ██║████╗  ██║██║   ██║╚██╗██╔╝      ██║████╗  ██║██╔════╝╚══██╔══╝██╔══██╗██║     ██║     
+██║  ██║██║     ██║██╔██╗ ██║██║   ██║ ╚███╔╝ ████╗ ██║██╔██╗ ██║███████╗   ██║   ███████║██║     ██║     
+██║  ██║██║     ██║██║╚██╗██║██║   ██║ ██╔██╗ ╚═══╝ ██║██║╚██╗██║╚════██║   ██║   ██╔══██║██║     ██║     
+██████╔╝███████╗██║██║ ╚████║╚██████╔╝██╔╝ ██╗      ██║██║ ╚████║███████║   ██║   ██║  ██║███████╗███████╗
+╚═════╝ ╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝      ╚═╝╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝
+-------------------------------------------------------------------------------------------------------------
+                               Setup Linux system as per your own taste
+-------------------------------------------------------------------------------------------------------------
+                                  Setup Vim and zsh for linux system                          
+-------------------------------------------------------------------------------------------------------------
+"
 
 source ./zsh_terminal_setup.sh
 source ./text_editor_install.sh
@@ -51,77 +65,77 @@ function enable_numlock_on_bootup() {
 
 
 function buttons() {
-  # Change the close,minimize,maximize button layout and pick the needed buttons theme
-  gsettings set org.cinnamon.desktop.wm.preferences button-layout 'close,maximize,minimize:'
-  gsettings set org.cinnamon.desktop.wm.preferences theme 'McOS-CTLina-Mint-Dark'
-  gsettings set org.cinnamon.desktop.interface gtk-theme Paper
-  gsettings set org.cinnamon.theme name 'Nordic'
-  gsettings set org.cinnamon.desktop.interface cursor-theme 'Pop'
+    # Change the close,minimize,maximize button layout and pick the needed buttons theme
+    gsettings set org.cinnamon.desktop.wm.preferences button-layout 'close,maximize,minimize:'
+    gsettings set org.cinnamon.desktop.wm.preferences theme 'McOS-CTLina-Mint-Dark'
+    gsettings set org.cinnamon.desktop.interface gtk-theme Paper
+    gsettings set org.cinnamon.theme name 'Nordic'
+    gsettings set org.cinnamon.desktop.interface cursor-theme 'Pop'
 }
 
 
 function alt_tab() {
-  # Change alt_tab style
-  gsettings set org.cinnamon alttab-switcher-style 'coverflow'
+    # Change alt_tab style
+    gsettings set org.cinnamon alttab-switcher-style 'coverflow'
 }
 
 
 function show_all_windows() {
-  # Show all Windows
-  gsettings set org.cinnamon hotcorner-layout "['scale:true:0', 'scale:false:0', 'scale:false:0', 'desktop:false:0']"
+    # Show all Windows
+    gsettings set org.cinnamon hotcorner-layout "['scale:true:0', 'scale:false:0', 'scale:false:0', 'desktop:false:0']"
 }
 
 
 function transparent_panels() {
-  # Add transparent transparent panels
-  git clone https://github.com/germanfr/cinnamon-transparent-panels.git
-  cd cinnamon-transparent-panels
-  ./utils.sh install
-  gsettings set org.cinnamon enabled-extensions "['transparent-panels@germanfr']"
-  sed -i 's/"value": "panel-.*/"value": "panel-semi-transparent"/g' ~/.cinnamon/configs/transparent-panels@germanfr/transparent-panels@germanfr.json
-  sed -i -n -f transparent-panel.sed ~/.cinnamon/configs/transparent-panels@germanfr/transparent-panels@germanfr.json
-  cd ..
+    # Add transparent transparent panels
+    git clone https://github.com/germanfr/cinnamon-transparent-panels.git
+    cd cinnamon-transparent-panels
+    ./utils.sh install
+    gsettings set org.cinnamon enabled-extensions "['transparent-panels@germanfr']"
+    sed -i 's/"value": "panel-.*/"value": "panel-semi-transparent"/g' ~/.cinnamon/configs/transparent-panels@germanfr/transparent-panels@germanfr.json
+    sed -i -n -f transparent-panel.sed ~/.cinnamon/configs/transparent-panels@germanfr/transparent-panels@germanfr.json
+    cd ..
 }
 
 
 function panel() {
-  # move panel to the top
-  gsettings set org.cinnamon panels-enabled "['1:0:top']"
-  gsettings set org.cinnamon panels-autohide "['1:false']"
-  gsettings set org.cinnamon panel-edit-mode true
-  #gsettings set org.cinnamon enabled-applets "['panel1:right:0:systray@cinnamon.org:3', 'panel1:right:1:xapp-status@cinnamon.org:4', 'panel1:right:2:notifications@cinnamon.org:5', 'panel1:right:3:printers@cinnamon.org:6', 'panel1:right:4:removable-drives@cinnamon.org:7', 'panel1:right:5:keyboard@cinnamon.org:8', 'panel1:right:6:favorites@cinnamon.org:9', 'panel1:right:7:network@cinnamon.org:10', 'panel1:right:8:sound@cinnamon.org:11', 'panel1:right:9:power@cinnamon.org:12', 'panel1:right:10:calendar@cinnamon.org:13']"
-  gsettings set org.cinnamon panel-edit-mode false
-  install_cinnamenu
-  install_weather
-  gsettings set org.cinnamon enabled-applets "['panel1:right:4:systray@cinnamon.org:3', 'panel1:right:5:xapp-status@cinnamon.org:4', 'panel1:right:6:notifications@cinnamon.org:5', 'panel1:right:7:printers@cinnamon.org:6', 'panel1:right:8:removable-drives@cinnamon.org:7', 'panel1:right:9:keyboard@cinnamon.org:8', 'panel1:right:10:favorites@cinnamon.org:9', 'panel1:right:11:network@cinnamon.org:10', 'panel1:right:12:sound@cinnamon.org:11', 'panel1:right:13:power@cinnamon.org:12', 'panel1:right:14:calendar@cinnamon.org:13', 'panel1:left:0:Cinnamenu@json:14', 'panel1:right:3:weather@mockturtl:15', 'panel1:right:2:scale@cinnamon.org:16', 'panel1:right:1:expo@cinnamon.org:17', 'panel1:right:15:user@cinnamon.org:18']"
-  sed -i -n -f transparent-panel.sed ~/.cinnamon/configs/Cinnamenu@json/*.json
-  sed -i -n -f transparent-panel.sed /home/dhrumeen/.cinnamon/configs/calendar@cinnamon.org/13.json
+    # move panel to the top
+    gsettings set org.cinnamon panels-enabled "['1:0:top']"
+    gsettings set org.cinnamon panels-autohide "['1:false']"
+    gsettings set org.cinnamon panel-edit-mode true
+    #gsettings set org.cinnamon enabled-applets "['panel1:right:0:systray@cinnamon.org:3', 'panel1:right:1:xapp-status@cinnamon.org:4', 'panel1:right:2:notifications@cinnamon.org:5', 'panel1:right:3:printers@cinnamon.org:6', 'panel1:right:4:removable-drives@cinnamon.org:7', 'panel1:right:5:keyboard@cinnamon.org:8', 'panel1:right:6:favorites@cinnamon.org:9', 'panel1:right:7:network@cinnamon.org:10', 'panel1:right:8:sound@cinnamon.org:11', 'panel1:right:9:power@cinnamon.org:12', 'panel1:right:10:calendar@cinnamon.org:13']"
+    gsettings set org.cinnamon panel-edit-mode false
+    install_cinnamenu
+    install_weather
+    gsettings set org.cinnamon enabled-applets "['panel1:right:4:systray@cinnamon.org:3', 'panel1:right:5:xapp-status@cinnamon.org:4', 'panel1:right:6:notifications@cinnamon.org:5', 'panel1:right:7:printers@cinnamon.org:6', 'panel1:right:8:removable-drives@cinnamon.org:7', 'panel1:right:9:keyboard@cinnamon.org:8', 'panel1:right:10:favorites@cinnamon.org:9', 'panel1:right:11:network@cinnamon.org:10', 'panel1:right:12:sound@cinnamon.org:11', 'panel1:right:13:power@cinnamon.org:12', 'panel1:right:14:calendar@cinnamon.org:13', 'panel1:left:0:Cinnamenu@json:14', 'panel1:right:3:weather@mockturtl:15', 'panel1:right:2:scale@cinnamon.org:16', 'panel1:right:1:expo@cinnamon.org:17', 'panel1:right:15:user@cinnamon.org:18']"
+    sed -i -n -f transparent-panel.sed ~/.cinnamon/configs/Cinnamenu@json/*.json
+    sed -i -n -f transparent-panel.sed /home/dhrumeen/.cinnamon/configs/calendar@cinnamon.org/13.json
 }
 
 function install_weather() {
-  # Install weather
-  wget https://cinnamon-spices.linuxmint.com/files/applets/weather@mockturtl.zip
-  unzip weather@mockturtl.zip -d ~/.local/share/cinnamon/applets/
+    # Install weather
+    wget https://cinnamon-spices.linuxmint.com/files/applets/weather@mockturtl.zip
+    unzip weather@mockturtl.zip -d ~/.local/share/cinnamon/applets/
 }
 
 function install_cinnamenu() {
-  # install Cinnamenu
-  wget https://cinnamon-spices.linuxmint.com/files/applets/Cinnamenu@json.zip
-  sudo apt-get install unzip -y
-  unzip Cinnamenu@json.zip -d ~/.local/share/cinnamon/applets
+    # install Cinnamenu
+    wget https://cinnamon-spices.linuxmint.com/files/applets/Cinnamenu@json.zip
+    sudo apt-get install unzip -y
+    unzip Cinnamenu@json.zip -d ~/.local/share/cinnamon/applets
 }
 
 function install_plank() {
-  # Install plank
-  sudo apt install plank -y
-  echo -e "[Desktop Entry]\nType=Application\nExec=plank\nHidden=false\nNoDisplay=false\nX-GNOME-Autostart-enabled=true\nName=Plank" >> ~/.config/autostart/plank.desktop
-  git clone https://github.com/Macintosh98/MacOS-Mojave-Plank-themes PlankMcTheme
-  mkdir -p ~/.local/share/plank/themes
-  sudo mv PlankMcTheme/themes/* ~/.local/share/plank/themes/
-  gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ theme 'MacOS-BigSur-Light'
-  gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ zoom-enabled true
-  gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ zoom-percent 160
-  gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ dock-items "['xed.dockitem', 'firefox.dockitem', 'org.gnome.Terminal.dockitem', 'trash.dockitem', 'desktop.dockitem']"
+    # Install plank
+    sudo apt install plank -y
+    echo -e "[Desktop Entry]\nType=Application\nExec=plank\nHidden=false\nNoDisplay=false\nX-GNOME-Autostart-enabled=true\nName=Plank" >> ~/.config/autostart/plank.desktop
+    git clone https://github.com/Macintosh98/MacOS-Mojave-Plank-themes PlankMcTheme
+    mkdir -p ~/.local/share/plank/themes
+    sudo mv PlankMcTheme/themes/* ~/.local/share/plank/themes/
+    gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ theme 'MacOS-BigSur-Light'
+    gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ zoom-enabled true
+    gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ zoom-percent 160
+    gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ dock-items "['xed.dockitem', 'firefox.dockitem', 'org.gnome.Terminal.dockitem', 'trash.dockitem', 'desktop.dockitem']"
 }
 
 #function mc_os_setup() {
@@ -145,8 +159,22 @@ function main() {
     panel
     install_plank
     set_dual_boot_timezone
-    sudo apt install vim -y
-    reboot
+    source ./vim_setup.sh
 }
 
 main
+
+echo -ne "
+-------------------------------------------------------------------------------------------------------------
+██████╗ ██╗     ██╗███╗   ██╗██╗   ██╗██╗  ██╗      ██╗███╗   ██╗███████╗████████╗ █████╗ ██╗     ██╗     
+██╔══██╗██║     ██║████╗  ██║██║   ██║╚██╗██╔╝      ██║████╗  ██║██╔════╝╚══██╔══╝██╔══██╗██║     ██║     
+██║  ██║██║     ██║██╔██╗ ██║██║   ██║ ╚███╔╝ ████╗ ██║██╔██╗ ██║███████╗   ██║   ███████║██║     ██║     
+██║  ██║██║     ██║██║╚██╗██║██║   ██║ ██╔██╗ ╚═══╝ ██║██║╚██╗██║╚════██║   ██║   ██╔══██║██║     ██║     
+██████╔╝███████╗██║██║ ╚████║╚██████╔╝██╔╝ ██╗      ██║██║ ╚████║███████║   ██║   ██║  ██║███████╗███████╗
+╚═════╝ ╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝      ╚═╝╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝
+-------------------------------------------------------------------------------------------------------------
+                                          Setup Complete
+-------------------------------------------------------------------------------------------------------------
+                                      Please reboot the system
+-------------------------------------------------------------------------------------------------------------
+"

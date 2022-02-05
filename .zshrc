@@ -67,3 +67,12 @@ extract ()
     echo "'$1' is not a valid file"
   fi
 }
+
+format () {
+    df -h
+    echo "Enter Device Name to format e.g /dev/sdc1"
+    read device_name
+    sudo umount $device_name
+    echo "Formating Drive with FAT32 file system"
+    sudo mkfs.vfat $device_name
+}                                                    

@@ -1,4 +1,4 @@
-# dlinux-install
+# Linux Mint Customization Scripts
 Code will allow you to customize the linux machine after install.
 Currently the settings are for Linux-Mint 20.2
 
